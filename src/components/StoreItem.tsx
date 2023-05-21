@@ -1,3 +1,5 @@
+import { formatCurrency } from "../utils/formatCurrency";
+
 type StoreItemProps = {
 	id: number;
 	name: string;
@@ -12,7 +14,7 @@ const StoreItem = ({ id, name, price, imgUrl }: StoreItemProps) => {
 
 			<div className="flex justify-between items-center">
 				<p>{name}</p>
-				<p>{price}</p>
+				<p>{formatCurrency(price)}</p>
 			</div>
 		</div>
 	);
