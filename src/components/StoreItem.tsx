@@ -1,3 +1,4 @@
+import { useShoppingCart } from "../context/ShoppingCartContext";
 import { formatCurrency } from "../utils/formatCurrency";
 
 type StoreItemProps = {
@@ -8,7 +9,14 @@ type StoreItemProps = {
 };
 
 const StoreItem = ({ id, name, price, imgUrl }: StoreItemProps) => {
-	const quantity = 1;
+	const {
+		getItemQuantity,
+		increaseCartQuantity,
+		decreaseCartQuantity,
+		removeFromCart,
+	} = useShoppingCart();
+
+	const quantity = getItemQuantity(id);
 
 	return (
 		<div className="flex flex-col">
@@ -21,22 +29,30 @@ const StoreItem = ({ id, name, price, imgUrl }: StoreItemProps) => {
 
 			<div className="flex justify-center items-center">
 				{quantity === 0 ? (
-					<button className="bg-blue-600 p-[8px] rounded-sm w-full">
+					<button
+						className="bg-blue-600 p-[8px] rounded-sm w-full"
+						onClick={() => increaseCartQuantity(id)}>
 						+ Add to Cart
 					</button>
 				) : (
 					<div className="flex flex-col">
 						<div className="flex justify-center items-center space-x-[8px] mb-[24px]">
-							<button className="bg-blue-600 py-[8px] px-[16px] rounded-[8px]">
+							<button
+								className="bg-blue-600 py-[8px] px-[16px] rounded-[8px]"
+								onClick={() => decreaseCartQuantity(id)}>
 								-
 							</button>
 							<span>{quantity} in cart</span>
-							<button className="bg-blue-600 py-[8px] px-[16px] rounded-[8px]">
+							<button
+								className="bg-blue-600 py-[8px] px-[16px] rounded-[8px]"
+								onClick={() => increaseCartQuantity(id)}>
 								+
 							</button>
 						</div>
 
-						<button className="bg-red-600 rounded-[8px] py-[4px] px-[8px]">
+						<button
+							className="bg-red-600 rounded-[8px] py-[4px] px-[8px]"
+							onClick={() => removeFromCart(id)}>
 							Remove
 						</button>
 					</div>
